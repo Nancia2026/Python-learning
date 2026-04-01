@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head><title>Todo List</title></head>
+<body>
+    <h1>Nancia's todo list!</h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul style = "color:blue">
+            {% for message in messages %}
+                <li>{{ message}}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <form action = "/add" method = "POST">
+        <p><input type="text" name="todo" placeholder="Add todo" required></p>
+        <button>Add</button>
+    </form>
+
+    <ul>
+        {% for todo in todos %}
+            <li>
+                {{ todo.text }}
+                {% if todo.done %}<strong style = "color:green">(done)</strong>
+                {% endif %}
+                <a href = "/delete/{{ todo.id }}">Delete</a>
+                <form action = "/toggle/{{ todo.id }}" method = "POST" style = "display:inline">
+                <button>Toggle</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
